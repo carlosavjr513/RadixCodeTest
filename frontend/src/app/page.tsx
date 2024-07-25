@@ -1,4 +1,5 @@
 import EquipmentForm from "./components/EquipmentForm";
+import FilterComponent from "./components/FilterComponent";
 import UploadForm from "./components/UploadForm";
 
 const Home: React.FC = () => {
@@ -12,6 +13,9 @@ const Home: React.FC = () => {
         </div>
         <div className="mt-6">
           <UploadForm />
+        </div>
+        <div className="mt-6">
+          <FilterComponent />
         </div>
       </main>
     </div>

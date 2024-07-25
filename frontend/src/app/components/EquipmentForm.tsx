@@ -1,7 +1,7 @@
 "use client";
 
+import { EquipmentData } from "@/types";
 import React, { useState } from "react";
-import { EquipmentData } from "../../types";
 import { postEquipmentData } from "../../utils/api";
 
 const EquipmentForm: React.FC = () => {
