@@ -3,12 +3,14 @@
 import { Equipment, FilteredValue } from "@/types";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import LineChartComponent from "./LineChartComponent";
 
 const FilterComponent: React.FC = () => {
   const [equipments, setEquipments] = useState<Equipment[]>([]);
   const [selectedEquipment, setSelectedEquipment] = useState<string>("");
-  const [period, setPeriod] = useState<string>("1");
+  const [period, setPeriod] = useState<string>("All");
   const [average, setAverage] = useState<number | null>(null);
+  const [chartData, setChartData] = useState<FilteredValue[]>([]);
 
   useEffect(() => {
     const fetchEquipments = async () => {
@@ -40,10 +42,10 @@ const FilterComponent: React.FC = () => {
           );
           const values = response.data.map((item: FilteredValue) => item.value);
           const avg =
-          values.reduce((acc: number, curr: number) => acc + curr, 0) /
-          values.length;
-          console.log("🚀 ~ fetchFilteredValues ~ avg:", avg)
+            values.reduce((acc: number, curr: number) => acc + curr, 0) /
+            values.length;
           setAverage(isNaN(avg) ? null : avg);
+          setChartData(response.data);
         } catch (error) {
           console.error("Error fetching filtered values:", error);
         }
@@ -55,6 +57,9 @@ const FilterComponent: React.FC = () => {
 
   return (
     <div className="p-4">
+      <div>
+        <LineChartComponent data={chartData} />
+      </div>
       <h2 className="text-xl font-bold mb-4">Filter Equipment Data</h2>
       <div className="mb-4">
         <label htmlFor="equipment" className="block mb-2">
@@ -67,7 +72,7 @@ const FilterComponent: React.FC = () => {
           onChange={(e) => setSelectedEquipment(e.target.value)}
         >
           <option value="" disabled>
-            Select an equipment
+            Select an Equipment
           </option>
           {equipments.map((equipment) => (
             <option key={equipment.equipmentId} value={equipment.equipmentId}>
@@ -79,7 +84,7 @@ const FilterComponent: React.FC = () => {
       <div className="mb-4">
         <label className="block mb-2">Select Time Period:</label>
         <div>
-          {["1", "24h", "48h", "1sem", "1mes"].map((timePeriod) => (
+          {["All", "24h", "48h", "1 week", "1 month"].map((timePeriod) => (
             <label key={timePeriod} className="mr-4">
               <input
                 type="radio"

@@ -11,3 +11,8 @@ export interface Equipment {
 export interface FilteredValue {
   value: number;
 }
+
+export interface FilteredValue {
+  timestamp: string;
+  value: number;
+}

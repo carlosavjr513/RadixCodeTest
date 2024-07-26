@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const UploadForm: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -14,7 +15,7 @@ const UploadForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!file) {
-      alert("Please upload a file");
+      toast.warning("Please upload a file");
       return;
     }
 
@@ -31,31 +32,26 @@ const UploadForm: React.FC = () => {
       );
 
       if (response.ok) {
-        alert("File uploaded successfully");
+        toast.success("File uploaded successfully");
       } else {
-        alert("Failed to upload file");
+        toast.error("Failed to upload file");
       }
     } catch (error) {
       console.error(error);
-      alert("Failed to upload file");
+      toast.error("Failed to upload file");
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label
-          htmlFor="file"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Upload CSV File
-        </label>
+        <h2 className="text-xl font-bold mb-4">Upload CSV File</h2>
         <input
           type="file"
           name="file"
           id="file"
           onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full rounded-md focus:outline-none sm:text-sm"
         />
       </div>
       <div>

@@ -45,7 +45,7 @@ const getFilteredValues = (equipmentId, period, callback) => {
       periodCondition = "1=1";
   }
 
-  const query = `SELECT value FROM equipment WHERE equipmentId = ? AND ${periodCondition}`;
+  const query = `SELECT timestamp, value FROM equipment WHERE equipmentId = ? AND ${periodCondition}`;
   db.query(query, [equipmentId], (err, results) => {
     if (err) {
       return callback(err);
